@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="img/appIcon.ico">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Monitoring Software</title>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="scripts/constants.js" defer></script>
+<script src="scripts/storageUtility.js" defer></script>
+<script src="scripts/backend.js" defer></script>
+<script src="scripts/notification.js" defer></script>
+<script src="scripts/htmlUtility.js" defer></script>
+<script src="scripts/components.js" defer></script>
+<script src="scripts/databaseView.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setUpKeyBoardControl();
+        setUpOnStart();
+        setUpDatabaseView();
+        setHeadlineFormBackend().then(() => console.info("Headline erfolgreich geladen"));
+        setValuesInTable().then(() => console.info("Tabelle erfolgreich erstellt"));
+
+        createDiskspaceChart().then(() => console.info("Diskspace Chart erfolgreich erstellt"));
+        createLineChart(cpuChart).then(() => console.info("CPU Chart erfolgreich erstellt"));
+        createLineChart(memoryChart).then(() => console.info("Mem Chart erfolgreich erstellt"));
+        setInterval(setValuesInTable, 500);
+        setInterval(checkForAlarms, 10000);
+    });
+</script>
+
+<body>
+<div class="notifications"></div>
+<div id="databaseView"></div>
+<h1 id="PageHeadline"></h1>
+
+<div class="row">
+    <div id="MonitorTable"></div>
+    <div class="diskspace">
+        <div class="diskspace-container">
+            <canvas class="diskspace-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="cpu-usage">
+        <div class="cpu-usage-container">
+            <canvas class="cpu-usage-chart"></canvas>
+        </div>
+    </div>
+    <div class="mem-usage">
+        <div class="mem-usage-container">
+            <canvas class="mem-usage-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
